@@ -1,3 +1,4 @@
+pub mod s0016_3sum_closest;
 pub mod s0024_swap_pair_nodes;
 pub mod s0026_remove_dupl;
 pub mod s0027_remove_element;
