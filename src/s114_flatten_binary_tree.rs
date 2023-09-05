@@ -25,9 +25,9 @@ impl Solution {
     pub fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
         if let Some(node) = root {
             let mut left = node.borrow_mut().left.take();
-            let mut right = node.borrow_mut().right.take();
-
             Solution::flatten(&mut left);
+
+            let mut right = node.borrow_mut().right.take();
             Solution::flatten(&mut right);
 
             node.borrow_mut().right = left;
@@ -36,15 +36,14 @@ impl Solution {
                 tree_node: &mut Option<Rc<RefCell<TreeNode>>>,
                 element: Option<Rc<RefCell<TreeNode>>>,
             ) {
-                match tree_node.take() {
-                    None => *tree_node = element,
+                *tree_node = match tree_node.take() {
+                    None => element,
                     Some(current) => {
-                        let mut borrow = current.borrow_mut();
-                        match borrow.right {
-                            None => borrow.right = element,
-                            Some(_) => append_to_right_most(&mut borrow.right, element),
+                        {
+                            let mut current_borrow = current.borrow_mut();
+                            append_to_right_most(&mut current_borrow.right, element);
                         }
-                        *tree_node = Some(current.clone());
+                        Some(current)
                     }
                 }
             }
