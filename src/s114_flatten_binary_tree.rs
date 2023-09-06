@@ -1,11 +1,13 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+type Leaf = Option<Rc<RefCell<TreeNode>>>;
+
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
     pub val: i32,
-    pub left: Option<Rc<RefCell<TreeNode>>>,
-    pub right: Option<Rc<RefCell<TreeNode>>>,
+    pub left: Leaf,
+    pub right: Leaf,
 }
 
 impl TreeNode {
@@ -22,7 +24,7 @@ impl TreeNode {
 pub struct Solution {}
 
 impl Solution {
-    pub fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
+    pub fn flatten(root: &mut Leaf) {
         if let Some(node) = root {
             let mut left = node.borrow_mut().left.take();
             Solution::flatten(&mut left);
@@ -32,17 +34,11 @@ impl Solution {
 
             node.borrow_mut().right = left;
 
-            fn append_to_right_most(
-                tree_node: &mut Option<Rc<RefCell<TreeNode>>>,
-                element: Option<Rc<RefCell<TreeNode>>>,
-            ) {
+            fn append_to_right_most(tree_node: &mut Leaf, element: Leaf) {
                 *tree_node = match tree_node.take() {
                     None => element,
                     Some(current) => {
-                        {
-                            let mut current_borrow = current.borrow_mut();
-                            append_to_right_most(&mut current_borrow.right, element);
-                        }
+                        append_to_right_most(&mut current.borrow_mut().right, element);
                         Some(current)
                     }
                 }
