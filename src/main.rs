@@ -8,6 +8,7 @@ pub mod s0035_search_insert;
 pub mod s0048_rotate_image;
 pub mod s0049_group_anagrams;
 pub mod s0058_last_word_length;
+pub mod s0071_simplify_path;
 pub mod s0080_remove_duplicate_ii;
 pub mod s0092_reverse_list_ii;
 pub mod s0100_same_tree;
