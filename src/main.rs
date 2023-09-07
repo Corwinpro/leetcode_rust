@@ -13,10 +13,10 @@ pub mod s0080_remove_duplicate_ii;
 pub mod s0092_reverse_list_ii;
 pub mod s0100_same_tree;
 pub mod s0104_max_depth;
+pub mod s0114_flatten_binary_tree;
 pub mod s0208_implement_trie;
 pub mod s0274_h_index;
 pub mod s0735_asteroid_collision;
-pub mod s114_flatten_binary_tree;
 pub mod s1492_kth_factor;
 pub mod s2405_optimal_partition;
 
